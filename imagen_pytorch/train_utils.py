@@ -43,6 +43,7 @@ class TrainLoop:
         save_dir,
         use_fp16=False,
         fp16_scale_growth=1e-3,
+        schedule_sampler=None,
         weight_decay=0.0,
         lr_anneal_steps=0,
         num_warmup_steps=10000,
@@ -73,7 +74,7 @@ class TrainLoop:
         self.step = 0
         self.resume_step = 0
         self.global_batch = self.batch_size
-        self.schedule_sampler = UniformSampler(diffusion)
+        self.schedule_sampler = schedule_sampler or UniformSampler(diffusion)
         self.model_params = list(self.model.parameters())
         self.master_params = self.model_params
         self.named_master_params = list(self.model.named_parameters())
